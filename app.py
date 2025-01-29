@@ -5,6 +5,7 @@ from langchain.schema import HumanMessage, AIMessage
 import requests
 from dotenv import load_dotenv
 from typing import Optional
+import uuid
 load_dotenv(override=True)
 
 print("Started")
@@ -33,6 +34,7 @@ def check_langflow_login():
         if st.session_state['input_langflow_url'] \
             and st.session_state['input_langflow_flow_id'] \
             and st.session_state['input_langflow_api_key']:
+            st.session_state['langflow_session_id'] = str(uuid.uuid4())
             st.session_state['langflow_url'] = st.session_state['input_langflow_url']
             st.session_state['langflow_flow_id'] = st.session_state['input_langflow_flow_id']
             st.session_state['langflow_api_key'] = st.session_state['input_langflow_api_key']
@@ -82,6 +84,7 @@ def run_flow(message: str,
         "input_value": message,
         "output_type": output_type,
         "input_type": input_type,
+        "session_id": st.session_state.langflow_session_id
     }
     headers = None
     if tweaks:
@@ -128,6 +131,8 @@ with st.sidebar:
         st.text(f"""{st.session_state.get('langflow_url', False)}""")
         st.caption(f"""**Flow ID:**""")
         st.text(f"""{st.session_state.get('langflow_flow_id', False)}""")
+        st.caption(f"""**Session ID:**""")
+        st.text(f"""{st.session_state.get('langflow_session_id', False)}""")
         st.form_submit_button("Reset Flow", on_click=logout)
 
 
