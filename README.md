@@ -2,6 +2,16 @@
 
 This is a simple Streamlit app that uses Langflow flows to run a conversational flow.
 
+## Login
+
+When the application starts, it will ask for the Langflow URL, Flow ID or Endpoint, and Token. You can define these values in the .env file.
+
+![Login](./assets/lf_st1.png)
+
+After the login, send your message to Langflow using the chat input:
+
+![Langflow Chat](./assets/lf_st2.png)
+
 ## Installation
 
 ```bash
